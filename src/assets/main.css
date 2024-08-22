@@ -1,4 +1,125 @@
-@import './base.css';
+* {
+  margin: 0; 
+  padding:0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: #E8EFF4;
+  font-family: Inter;
+}
+
+header {
+  text-align: start;
+  max-width: 100%;
+}
+
+.topline {
+  color: #323D4A;
+  margin-top: 69px;
+  margin-left: 60px;
+  font-weight: 900;
+  font-size: 62px;
+}
+
+.date {
+  color: #9AA7B1;
+  font-weight: 500;
+  font-size: 62px;
+  margin-left: 60px;
+  margin-top: 21px;;
+}
+
+main {
+  flex: 1;
+}
+
+.monitor {
+  margin-left: 60px;
+  margin-right: 60px;
+  margin-top: 40px;
+  margin-bottom: 40px;
+  background-color: #0F05A0;
+  height: 182px;
+}
+
+.inner-monitor{
+  padding-top: 34.5px;
+  padding-left: 35px;
+  padding-bottom: 39.5px;
+}
+
+.text-top {
+  color: #EB5E00;
+  font-weight: 900;
+  font-size: 28px;
+  line-height: 36px;
+}
+
+.text-middle {
+  color: #FFBFAB;
+  font-weight: 900;
+  font-size: 28px;
+  line-height: 36px;
+}
+
+.text-bottom {
+  color: #FFBFAB;
+  font-weight: 500;
+  font-size: 28px;
+  line-height: 36px;
+}
+
+footer {
+  background-color: #FFFFFF;
+  padding: 20px 0; 
+  text-align: center; 
+}
+
+.footer-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  align-items: center; 
+  max-width: 1080px; 
+  margin: 0 auto; /* Zentriert den Container innerhalb des Footers */
+  gap: 80px;
+}
+
+.footer-container img {
+  width: 100%;
+  height: auto; 
+  padding: 20px;
+}
+
+@media (max-width: 768px) {
+  .footer-container {
+      grid-template-columns: repeat(2, 1fr); /* Zwei Spalten statt drei */
+      grid-template-rows: repeat(2, auto); /* Neue Zeile für das dritte Bild */
+  }
+
+  .footer-container img:nth-child(3) {
+      grid-column: span 2; /* Das dritte Bild nimmt die ganze Breite ein */
+  }
+}
+
+@media (max-width: 480px) {
+  .footer-container {
+      grid-template-columns: 1fr; /* Eine Spalte */
+      display: block; /* Sicherstellen, dass das Bild angezeigt wird */
+  }
+
+  .footer-container img {
+      width: 100%; 
+      margin: 0 auto; 
+  }
+}
+
 
 #app {
   max-width: 1280px;
@@ -7,29 +128,10 @@
   font-weight: normal;
 }
 
-a,
-.green {
-  text-decoration: none;
-  color: hsla(160, 100%, 37%, 1);
-  transition: 0.4s;
-  padding: 3px;
-}
-
-@media (hover: hover) {
-  a:hover {
-    background-color: hsla(160, 100%, 37%, 0.2);
-  }
-}
-
-@media (min-width: 1024px) {
-  body {
-    display: flex;
-    place-items: center;
-  }
 
   #app {
     display: grid;
     grid-template-columns: 1fr 1fr;
     padding: 0 2rem;
   }
-}
+
