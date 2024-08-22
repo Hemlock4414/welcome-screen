@@ -1,13 +1,10 @@
 * {
   margin: 0; 
   padding:0;
-}
-
-* {
   box-sizing: border-box;
 }
 
-html, body {
+#app, html, body {
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -138,17 +135,5 @@ footer {
 }
 
 
-#app {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  font-weight: normal;
-}
 
-
-  #app {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding: 0 2rem;
-  }
 
