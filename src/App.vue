@@ -67,9 +67,9 @@ export default {
              console.log(data);
 
         this.sheetData = await data.valueRanges[0].values 
-        // valueRanges und verschachtelt values aus dem spreadsheet-Array
+        // valueRanges und verschachtelt values aus dem spreadsheetId-Array
 
-        console.log(this.sheetData)
+        // console.log(this.sheetData)
 
       } catch (error) {
         console.error('Error fetching Google Sheet data:', error);
