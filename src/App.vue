@@ -63,7 +63,7 @@ export default {
         const googleAPI = import.meta.env.VITE_GOOGLE_API_KEY
         const googleSheetId = "1AVot6dZIeVFQuYBqnKmTtB0uPvRgt4kqHKEikdlJpFE"
 
-        const response = await fetch('https://sheets.googleapis.com/v4/spreadsheets/${googleSheetId}/values:batchGet?ranges=A1%3AE100&valueRenderOption=FORMATTED_VALUE&key=${googleAPI}');
+        const response = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${googleSheetId}/values:batchGet?ranges=A1%3AE100&valueRenderOption=FORMATTED_VALUE&key=${googleAPI}`);
         const data = await response.json()
        
              console.log(response.status)
