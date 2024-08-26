@@ -23,15 +23,9 @@
         </div>
     </div> -->
 
-    <div v-for="(row, index) in sheetData.slice(1)" :key="index" class="monitor">
-      <div class="inner-monitor">
-    
-        <div class="text-top"> {{ row[0] }} </div>
-        <div class="text-middle"> {{ row[1] }} </div>
-        <div class="text-bottom"> {{ row[2] }} </div>
+    <Card />
 
-      </div>
-    </div>
+
 
     <!-- <div class="monitor"></div> -->
 
@@ -48,6 +42,7 @@
 </template>
 
 <script>
+import Card from './components/Card.vue';
 
 export default {
   data() {
@@ -61,9 +56,10 @@ export default {
     async getData() {
       try {
         const googleAPI = import.meta.env.VITE_GOOGLE_API_KEY
-        const googleSheetId = "1AVot6dZIeVFQuYBqnKmTtB0uPvRgt4kqHKEikdlJpFE"
+        const googleSheetId = import.meta.env.VITE_GOOGLE_SHEET_ID
 
         const response = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${googleSheetId}/values:batchGet?ranges=A1%3AE100&valueRenderOption=FORMATTED_VALUE&key=${googleAPI}`);
+        // Backticks statt singleQuotes in der URL
         const data = await response.json()
        
              console.log(response.status)
