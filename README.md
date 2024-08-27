@@ -11,3 +11,7 @@ https://www.figma.com/design/3gE4cJE2nkvng8kEEyKWyw/Welcome-Screen?node-id=0-1&t
 ## Umsetzung
 
 Alle "Required"-Anforderungen wurden umgesetzt, zusätzlich im optionalen Bereich wurde der Screen mit Vue-Komponenten erstellt.
+
+**Live-Ticker**
+Zum Schluss gerade noch so hingekriegt: einen Live-Ticker!
+Text im Google Sheet an der richtigen Stelle eingeben (E2) und er wird angezeigt, gibts keinen Text gibts auch keinen Live-Ticker.
