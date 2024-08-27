@@ -9,35 +9,23 @@
   </header>
 
   <main>
-<!--     <div class="monitor">
-        <div class="inner-monitor">
-              <div class="text-top">
-                <p>14.00 Uhr</p>
-              </div>
-              <div class="text-middle">
-                <p>Basisbeschäftigung Besuch</p>
-              </div>
-              <div class="text-bottom">
-                <p>Interessierte für den zweiten Kurs werden uns besuchen</p>
-              </div>
-        </div>
-    </div> -->
-
-    <div v-for="(row, index) in sheetData.slice(1)" :key="index" class="monitor">
-      <div class="inner-monitor">
-    
-        <div class="text-top"> {{ row[0] }} </div>
-        <div class="text-middle"> {{ row[1] }} </div>
-        <div class="text-bottom"> {{ row[2] }} </div>
-
-      </div>
-    </div>
-
-    <!-- <div class="monitor"></div> -->
-
+  
+    <MonitorCard
+      v-for="(row, index) in sheetData.slice(1)"
+      :key="index"
+      :topText="row[0]"
+      :middleText="row[1]"
+      :bottomText="row[2]"
+    />
+    <LiveTicker 
+    v-if="tickerMessage"
+    :tickerMessage="tickerMessage" 
+    :speed="10" 
+    />
   </main>
 
   <footer>
+
     <div class="footer-container">
       <img src="/STZH_SEB_Logo-2.png" alt="">
       <img src="/Opportunity.png" alt="">
@@ -48,38 +36,29 @@
 </template>
 
 <script>
+import { nextTick } from 'vue';
+
+import MonitorCard from '@/components/MonitorCard.vue';
+import LiveTicker from '@/components/LiveTicker.vue';
 
 export default {
+  components: {
+    MonitorCard,
+    LiveTicker
+  },
   data() {
     return {
       currentDate: this.getCurrentDate(),
-
-       sheetData: [] // Hier werden die Daten vom Google Sheet gespeichert
-    }
+      sheetData: [], // Hier werden die Daten vom Google Sheet gespeichert
+      tickerMessage: "" 
+    };
   },
   methods: {
-    async getData() {
-      try {
-        const response = await fetch('https://sheets.googleapis.com/v4/spreadsheets/1AVot6dZIeVFQuYBqnKmTtB0uPvRgt4kqHKEikdlJpFE/values:batchGet?ranges=A1%3AE100&valueRenderOption=FORMATTED_VALUE&key=AIzaSyDDVG1Yr3VR40cE8AIEp-aTp_nRirJoF8I');
-        const data = await response.json()
-       
-             console.log(response.status)
-             console.log(data);
-
-        this.sheetData = await data.valueRanges[0].values 
-        // valueRanges und verschachtelt values aus dem spreadsheetId-Array
-
-        // console.log(this.sheetData)
-
-      } catch (error) {
-        console.error('Error fetching Google Sheet data:', error);
-      }
-    },
     getCurrentDate() {
-      const options = { 
-        day: '2-digit', 
-        month: '2-digit', 
-        year: 'numeric' 
+      const options = {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric'
       };
       return new Date().toLocaleDateString('de-DE', options);
     },
@@ -87,15 +66,41 @@ export default {
       this.currentDate = this.getCurrentDate();
       setInterval(() => {
         this.currentDate = this.getCurrentDate();
-      }, 3600000);          // Aktualisiere jede Stunde
+      }, 3600000); // Aktualisiert jede Stunde
+    },
+    async getData() {
+      try {
+        const googleAPI = import.meta.env.VITE_GOOGLE_API_KEY;
+        const googleSheetId = import.meta.env.VITE_GOOGLE_SHEET_ID;
+
+        const response = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${googleSheetId}/values:batchGet?ranges=A1%3AE100&valueRenderOption=FORMATTED_VALUE&key=${googleAPI}`);
+        // Backticks und keine single Quotes bei Variablen in der URL
+        const data = await response.json();
+        this.sheetData = data.valueRanges[0].values;
+        // console.log('Fetched Data:', data);
+
+        // Setze die erste Nachricht des Tickers, falls vorhanden
+        if (this.sheetData.length > 0 && this.sheetData[0].length > 4) {
+          // > 0 -> Überprüft, ob mesindestens eine Zeile in den abgerufenen Daten gibt. 
+          // > 4 -> Überprüft, ob diese erste Zeile mindestens 5 Spalten enthält.
+        this.tickerMessage = this.sheetData[1][4]; // Zweite Zeile, fünfte Spalte
+          } else {
+            this.tickerMessage = "";
+          }
+
+      } catch (error) {
+        console.error('Error fetching Google Sheet data:', error);
+      }
+      // console.log(this.tickerMessage);
+
     }
   },
   mounted() {
-    this.getData(); 
-
     this.updateDateEveryHour();
+    this.getData();
+    setInterval(this.getData, 60000); // Aktualisiert die Daten jede Minute
   }
-}
+};
 </script>
 
 <style scoped>
