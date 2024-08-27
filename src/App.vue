@@ -88,9 +88,6 @@ export default {
             this.tickerMessage = "";
           }
 
-          nextTick(() => {
-          this.startTicker(); // Start ticker after data is set
-          });
       } catch (error) {
         console.error('Error fetching Google Sheet data:', error);
       }
