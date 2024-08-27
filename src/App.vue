@@ -9,19 +9,6 @@
   </header>
 
   <main>
-<!--     <div class="monitor">
-        <div class="inner-monitor">
-              <div class="text-top">
-                <p>14.00 Uhr</p>
-              </div>
-              <div class="text-middle">
-                <p>Basisbeschäftigung Besuch</p>
-              </div>
-              <div class="text-bottom">
-                <p>Interessierte für den zweiten Kurs werden uns besuchen</p>
-              </div>
-        </div>
-    </div> -->
   
     <MonitorCard
       v-for="(row, index) in sheetData.slice(1)"
@@ -30,13 +17,15 @@
       :middleText="row[1]"
       :bottomText="row[2]"
     />
-  
-    <!-- <div class="monitor"></div> -->
-
-    <LiveTicker :messages="tickerMessages" :speed="50" />
+    <LiveTicker 
+    v-if="tickerMessage"
+    :tickerMessage="tickerMessage" 
+    :speed="10" 
+    />
   </main>
 
   <footer>
+
     <div class="footer-container">
       <img src="/STZH_SEB_Logo-2.png" alt="">
       <img src="/Opportunity.png" alt="">
@@ -47,6 +36,8 @@
 </template>
 
 <script>
+import { nextTick } from 'vue';
+
 import MonitorCard from '@/components/MonitorCard.vue';
 import LiveTicker from '@/components/LiveTicker.vue';
 
@@ -59,9 +50,7 @@ export default {
     return {
       currentDate: this.getCurrentDate(),
       sheetData: [], // Hier werden die Daten vom Google Sheet gespeichert
-      tickerMessages: [
-        "Welcome to the game!"
-      ]
+      tickerMessage: "" 
     };
   },
   methods: {
@@ -89,9 +78,24 @@ export default {
         const data = await response.json();
         this.sheetData = data.valueRanges[0].values;
         // console.log('Fetched Data:', data);
+
+        // Setze die erste Nachricht des Tickers, falls vorhanden
+        if (this.sheetData.length > 0 && this.sheetData[0].length > 4) {
+          // > 0 -> Überprüft, ob mesindestens eine Zeile in den abgerufenen Daten gibt. 
+          // > 4 -> Überprüft, ob diese erste Zeile mindestens 5 Spalten enthält.
+        this.tickerMessage = this.sheetData[1][4]; // Zweite Zeile, fünfte Spalte
+          } else {
+            this.tickerMessage = "";
+          }
+
+          nextTick(() => {
+          this.startTicker(); // Start ticker after data is set
+          });
       } catch (error) {
         console.error('Error fetching Google Sheet data:', error);
       }
+      // console.log(this.tickerMessage);
+
     }
   },
   mounted() {

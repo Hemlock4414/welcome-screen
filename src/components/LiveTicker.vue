@@ -1,19 +1,24 @@
 
 <template>
-    <div class="live-ticker">
-      <div class="ticker-text" :style="tickerStyle">
+    <div class="live-ticker" ref="tickerContainer">
+      <div class="ticker-text" ref="tickerText" :style="tickerStyle">
         {{ tickerMessage }}
+      </div>
+      <div v-if="!tickerMessage">
+        No ticker message available.
       </div>
     </div>
   </template>
 
 
 <script>
+import { nextTick } from 'vue';
+
 export default {
 //   name: "LiveTicker",
   props: {
-    messages: {
-      type: Array,
+    tickerMessage: {
+      type: String,
       required: true
     },
     speed: {
@@ -23,7 +28,6 @@ export default {
   },
   data() {
     return {
-      tickerMessage: "",
       tickerStyle: {
         transform: "translateX(100%)"
       }
@@ -31,27 +35,35 @@ export default {
   },
   methods: {
     startTicker() {
-      this.tickerMessage = this.messages.join(" • "); // Verbinde die Nachrichten mit einem Trennzeichen
-      const tickerWidth = this.$refs.tickerText.offsetWidth; // Breite des Tickers ermitteln
-      const containerWidth = this.$refs.tickerContainer.offsetWidth; // Breite des Containers ermitteln
+        nextTick(() => {
+            const tickerWidth = this.$refs.tickerText?.offsetWidth; // Breite des Tickers ermitteln
+            const containerWidth = this.$refs.tickerContainer?.offsetWidth; // Breite des Containers ermitteln
 
-      let tickerPosition = containerWidth;
+            if (!tickerWidth || !containerWidth) {
+            console.error('Could not determine ticker or container width.');
+            return;
+            }
 
-      const moveTicker = () => {
-        tickerPosition -= 1;
-        if (tickerPosition <= -tickerWidth) {
-          tickerPosition = containerWidth;
-        }
-        this.tickerStyle.transform = `translateX(${tickerPosition}px)`;
-      };
+            let tickerPosition = containerWidth;
 
-      setInterval(moveTicker, this.speed);
+            const moveTicker = () => {
+                tickerPosition -= 1;
+                if (tickerPosition <= -tickerWidth) {
+                tickerPosition = containerWidth;
+                }
+                this.tickerStyle.transform = `translateX(${tickerPosition}px)`;
+                };
+        
+            setInterval(moveTicker, this.speed);
+        });
     }
-  },
+ },
   mounted() {
-    this.startTicker();
-  }
+    
+      this.startTicker();
+    }
 };
+
 </script>
 
 <style scoped>
@@ -59,13 +71,15 @@ export default {
   width: 100%;
   overflow: hidden;
   white-space: nowrap;
-  background-color: #0F05A0; 
+  background-color: #ff0000; 
   color: #FFFFFF; 
   font-weight: bold;
+  font-size: 50px;
 }
 
 .ticker-text {
   display: inline-block;
   padding: 10px 0;
+  white-space: nowrap;
 }
 </style>
