@@ -8,10 +8,13 @@ Vue.js, HTML, CSS, JavaScript, Google API, Figma, Github, Vercel
 ## Figma Design:
 https://www.figma.com/design/3gE4cJE2nkvng8kEEyKWyw/Welcome-Screen?node-id=0-1&t=4mG3KpKe0qjiBf1W-0
 
+## Vercel Domain:
+https://welcome-screen-murex.vercel.app/
+
 ## Umsetzung
 
 Alle "Required"-Anforderungen wurden umgesetzt, zusätzlich im optionalen Bereich wurde der Screen mit Vue-Komponenten erstellt.
 
 **Live-Ticker**
 Zum Schluss gerade noch so hingekriegt: einen Live-Ticker!
-Text im Google Sheet an der richtigen Stelle eingeben (E2) und er wird angezeigt, gibts keinen Text gibts auch keinen Live-Ticker.
+Text im Google Sheet an der richtigen Stelle eingeben (E2) und er wird angezeigt, gibts keinen Text gibts dank v-if auch keinen Live-Ticker.

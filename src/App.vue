@@ -36,7 +36,6 @@
 </template>
 
 <script>
-import { nextTick } from 'vue';
 
 import MonitorCard from '@/components/MonitorCard.vue';
 import LiveTicker from '@/components/LiveTicker.vue';
