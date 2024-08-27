@@ -33,6 +33,7 @@
   
     <!-- <div class="monitor"></div> -->
 
+    <LiveTicker :messages="tickerMessages" :speed="50" />
   </main>
 
   <footer>
@@ -47,15 +48,20 @@
 
 <script>
 import MonitorCard from '@/components/MonitorCard.vue';
+import LiveTicker from '@/components/LiveTicker.vue';
 
 export default {
   components: {
-    MonitorCard
+    MonitorCard,
+    LiveTicker
   },
   data() {
     return {
       currentDate: this.getCurrentDate(),
-      sheetData: [] // Hier werden die Daten vom Google Sheet gespeichert
+      sheetData: [], // Hier werden die Daten vom Google Sheet gespeichert
+      tickerMessages: [
+        "Welcome to the game!"
+      ]
     };
   },
   methods: {
