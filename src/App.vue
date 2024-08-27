@@ -22,11 +22,15 @@
               </div>
         </div>
     </div> -->
-
-    <Card />
-
-
-
+  
+    <MonitorCard
+      v-for="(row, index) in sheetData.slice(1)"
+      :key="index"
+      :topText="row[0]"
+      :middleText="row[1]"
+      :bottomText="row[2]"
+    />
+  
     <!-- <div class="monitor"></div> -->
 
   </main>
@@ -42,43 +46,24 @@
 </template>
 
 <script>
-import Card from './components/Card.vue';
+import MonitorCard from '@/components/MonitorCard.vue';
 
 export default {
+  components: {
+    MonitorCard
+  },
   data() {
     return {
       currentDate: this.getCurrentDate(),
-
-       sheetData: [] // Hier werden die Daten vom Google Sheet gespeichert
-    }
+      sheetData: [] // Hier werden die Daten vom Google Sheet gespeichert
+    };
   },
   methods: {
-    async getData() {
-      try {
-        const googleAPI = import.meta.env.VITE_GOOGLE_API_KEY
-        const googleSheetId = import.meta.env.VITE_GOOGLE_SHEET_ID
-
-        const response = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${googleSheetId}/values:batchGet?ranges=A1%3AE100&valueRenderOption=FORMATTED_VALUE&key=${googleAPI}`);
-        // Backticks statt singleQuotes in der URL
-        const data = await response.json()
-       
-             console.log(response.status)
-             console.log(data);
-
-        this.sheetData = await data.valueRanges[0].values 
-        // valueRanges und verschachtelt values aus dem spreadsheetId-Array
-
-        // console.log(this.sheetData)
-
-      } catch (error) {
-        console.error('Error fetching Google Sheet data:', error);
-      }
-    },
     getCurrentDate() {
-      const options = { 
-        day: '2-digit', 
-        month: '2-digit', 
-        year: 'numeric' 
+      const options = {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric'
       };
       return new Date().toLocaleDateString('de-DE', options);
     },
@@ -86,15 +71,29 @@ export default {
       this.currentDate = this.getCurrentDate();
       setInterval(() => {
         this.currentDate = this.getCurrentDate();
-      }, 3600000);          // Aktualisiere jede Stunde
+      }, 3600000); // Aktualisiert jede Stunde
+    },
+    async getData() {
+      try {
+        const googleAPI = import.meta.env.VITE_GOOGLE_API_KEY;
+        const googleSheetId = import.meta.env.VITE_GOOGLE_SHEET_ID;
+
+        const response = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${googleSheetId}/values:batchGet?ranges=A1%3AE100&valueRenderOption=FORMATTED_VALUE&key=${googleAPI}`);
+        // Backticks und keine single Quotes bei Variablen in der URL
+        const data = await response.json();
+        this.sheetData = data.valueRanges[0].values;
+        // console.log('Fetched Data:', data);
+      } catch (error) {
+        console.error('Error fetching Google Sheet data:', error);
+      }
     }
   },
   mounted() {
-    this.getData(); 
-
     this.updateDateEveryHour();
+    this.getData();
+    setInterval(this.getData, 60000); // Aktualisiert die Daten jede Minute
   }
-}
+};
 </script>
 
 <style scoped>

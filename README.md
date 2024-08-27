@@ -1,29 +1,13 @@
-# welcome-screen
+# P09 - Welcome Screen mit Vue.js
 
-This template should help get you started developing with Vue 3 in Vite.
+Ein vordefiniertes Design eines Welcome Screens umsetzen, das als Figma-Vorlage bereitgestellt wird. Dieser Screen soll mit Vue.js und einer Google API entwickelt werden und muss in einer Auflösung von 1920 x 1080 dargestellt werden. Der Screen soll in regelmässigen Abständen neue Daten von der API abrufen und anzeigen können. 
 
-## Recommended IDE Setup
+## Tech Stack
+Vue.js, HTML, CSS, JavaScript, Google API, Figma, Github, Vercel
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+## Figma Design:
+https://www.figma.com/design/3gE4cJE2nkvng8kEEyKWyw/Welcome-Screen?node-id=0-1&t=4mG3KpKe0qjiBf1W-0
 
-## Customize configuration
+## Umsetzung
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
-
-## Project Setup
-
-```sh
-npm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
-npm run dev
-```
-
-### Compile and Minify for Production
-
-```sh
-npm run build
-```
+Alle "Required"-Anforderungen wurden umgesetzt, zusätzlich im optionalen Bereich wurde der Screen mit Vue-Komponenten erstellt.
