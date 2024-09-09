@@ -85,6 +85,7 @@ footer {
 @media (max-width: 480px) {
   .footer-container {
       grid-template-columns: 1fr; /* Nur eine Spalte bei ganz kleinen Bildschirmen */
+      display: block; /* Sicherstellen, dass das Bild angezeigt wird */
   }
 
   .footer-container img {
