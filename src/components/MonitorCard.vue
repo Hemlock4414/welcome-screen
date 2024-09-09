@@ -45,6 +45,8 @@ export default {
 .text-top {
   color: #EB5E00;
   font-weight: 900;
+  font-size: 28px;
+  line-height: 36px;
 }
 
 .text-middle, .text-bottom { 
