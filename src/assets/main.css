@@ -53,6 +53,47 @@ main {
 
 footer {
   background-color: #FFFFFF;
+  text-align: center; 
+  padding: 20px 0;
+}
+
+.footer-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Standard: Drei Spalten */
+  align-items: center; 
+  max-width: 1080px; 
+  margin: 0 auto;
+  gap: 80px;
+}
+
+.footer-container img {
+  width: 100%;
+  height: auto;
+  padding: 20px;
+}
+
+@media (max-width: 768px), (max-width: 480px) {
+  .footer-container {
+      grid-template-columns: repeat(2, 1fr); /* Bei kleineren Bildschirmen: Zwei Spalten */
+  }
+
+  .footer-container img:nth-child(3) {
+      grid-column: span 2; /* Drittes Bild auf volle Breite bei 768px und kleiner */
+  }
+}
+
+@media (max-width: 480px) {
+  .footer-container {
+      grid-template-columns: 1fr; /* Nur eine Spalte bei ganz kleinen Bildschirmen */
+  }
+
+  .footer-container img {
+      margin: 0 auto;
+  }
+}
+
+/* footer {
+  background-color: #FFFFFF;
   padding: 0; 
   text-align: center; 
   padding: 20px 0;
@@ -63,7 +104,7 @@ footer {
   grid-template-columns: 1fr 1fr 1fr;
   align-items: center; 
   max-width: 1080px; 
-  margin: 0 auto; /* Zentriert den Container innerhalb des Footers */
+  margin: 0 auto; /* Zentriert den Container innerhalb des Footers 
   gap: 80px;
 }
 
@@ -75,19 +116,19 @@ footer {
 
 @media (max-width: 768px) {
   .footer-container {
-      grid-template-columns: repeat(2, 1fr); /* Zwei Spalten statt drei */
-      grid-template-rows: repeat(2, auto); /* Neue Zeile für das dritte Bild */
+      grid-template-columns: repeat(2, 1fr); /* Zwei Spalten statt drei 
+      grid-template-rows: repeat(2, auto); /* Neue Zeile für das dritte Bild 
   }
 
   .footer-container img:nth-child(3) {
-      grid-column: span 2; /* Das dritte Bild nimmt die ganze Breite ein */
+      grid-column: span 2; /* Das dritte Bild nimmt die ganze Breite ein 
   }
 }
 
 @media (max-width: 480px) {
   .footer-container {
-      grid-template-columns: 1fr; /* Eine Spalte */
-      display: block; /* Sicherstellen, dass das Bild angezeigt wird */
+      grid-template-columns: 1fr; /* Eine Spalte 
+      display: block; /* Sicherstellen, dass das Bild angezeigt wird 
   }
 
   .footer-container img {
@@ -95,7 +136,7 @@ footer {
       margin: 0 auto; 
   }
 }
-
+ */
 
 
 
